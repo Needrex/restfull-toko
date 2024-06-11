@@ -6,14 +6,16 @@ import { JwtStrategy } from './strategy-jwt/strategy-jwt';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { PrismaClient } from '@prisma/client';
+import { MyLoggerModule } from 'src/my-logger/my-logger.module';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'google' }),
+    MyLoggerModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '120s',
+        expiresIn: '500s',
       },
     }),
   ],

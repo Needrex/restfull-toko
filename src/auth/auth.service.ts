@@ -3,12 +3,14 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthDto } from '../dto/auth';
 import { Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { Logger } from 'src/my-logger/logger/logger';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userModel: PrismaClient,
+    private logger: Logger,
   ) {}
 
   async login(user: AuthDto, res: Response): Promise<boolean> {
@@ -28,7 +30,7 @@ export class AuthService {
           });
 
           res.cookie('token', token, {
-            maxAge: 60000,
+            maxAge: 600000,
           });
           return true;
         } else {

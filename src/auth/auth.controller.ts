@@ -11,14 +11,18 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
+import { Logger } from 'src/my-logger/logger/logger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private logger: Logger,
+  ) {}
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {
-    console.log(req);
+  async googleAuth() {
+    this.logger.log('user request in google auth');
   }
 
   @Get('google/callback')
